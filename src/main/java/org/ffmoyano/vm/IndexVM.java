@@ -11,13 +11,9 @@ import org.zkoss.zk.ui.Executions;
 import java.sql.SQLException;
 
 public class IndexVM {
-	private final UserService userService;
 	private User loggedUser;
 	private int count;
-
-    public IndexVM(UserService userService) {
-        this.userService = userService;
-    }
+	private final UserService userService = new UserService();
 
     @Init
 	public void init() {
@@ -31,7 +27,7 @@ public class IndexVM {
 	@Command
 	@NotifyChange("count")
 	public void cmd() throws SQLException {
-		new UserRepository().findByUserNameAndPassword();
+		new UserRepository().getUserByEmailAndPassword("","");
 	}
 
 	public int getCount() {

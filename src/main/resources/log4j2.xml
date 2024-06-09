@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info" strict="true" verbose="false" monitorInterval="10">
+
+    <Properties>
+        <Property name="log.home">./logs</Property>
+        <Property name="image_hosting">image_hosting</Property>
+    </Properties>
+
+    <Appenders>
+
+        <Appender type="Console" name="STDOUT">
+            <Layout type="PatternLayout" pattern="%highlight{%date{HH:mm:ss.SSS} %t %X{user}@%X{addr} %-5level %logger{1.} - %message%n}"/>
+        </Appender>
+
+        <Appender type="RollingFile" name="FSERVICE_TRACE"
+            fileName="${log.home}/${image_hosting}.t.log"
+            filePattern="${log.home}/${image_hosting}.t.%d{yyyy-MM-dd}.log">
+            <Layout type="PatternLayout" pattern="%highlight{%date %t %X{user}@%X{addr} %-5level %logger{20} - %message%n}"/>
+            <ThresholdFilter level="TRACE" onMatch="ACCEPT" onMismatch="DENY"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+            <Strategy type="DefaultRolloverStrategy" max="20"/>
+        </Appender>
+
+   </Appenders>
+
+
+    <Loggers>
+        <Logger name="es.eportal" level="trace" additivity="false">
+            <AppenderRef ref="FSERVICE_TRACE"/>
+        </Logger>
+
+        <Root level="OFF">
+            <AppenderRef ref="STDOUT"/>
+        </Root>
+    </Loggers>
+
+</Configuration>

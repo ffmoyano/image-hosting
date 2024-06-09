@@ -33,7 +33,7 @@ public class LoginVM {
 	@NotifyChange("error")
 	public void login(@BindingParam("email") String email, @BindingParam("password") String password) {
 		Session sess = Sessions.getCurrent();
-		User user = userService.getUserByEmailAndPassword(email, password);
+		User user = userService.login(email, password);
 		if(user != null) {
 			sess.setAttribute("userCredential", user);
 			Executions.sendRedirect("index");
